@@ -13,16 +13,21 @@ class Entropycat < Formula
 
   def install
     bin.install "entropycat"
-    (share/"entropycat").install "config.yaml"
     (share/"entropycat").install "THIRD_PARTY_LICENSES.txt"
+
+    config_dir  = Pathname.new(Dir.home)/".entropycat"
+    config_file = config_dir/"config.yaml"
+    unless config_file.exist?
+      config_dir.mkpath
+      (share/"entropycat").install "config.yaml"
+      config_file.write((share/"entropycat"/"config.yaml").read)
+    end
   end
 
   def caveats
     <<~EOS
-      To get started, copy the example config and edit it:
-        cp #{share}/entropycat/config.yaml ~/.entropycat/config.yaml
-
-      Then run:
+      Config file: ~/.entropycat/config.yaml
+      Edit it to configure your Kafka brokers and other settings, then run:
         entropycat --config ~/.entropycat/config.yaml
     EOS
   end
