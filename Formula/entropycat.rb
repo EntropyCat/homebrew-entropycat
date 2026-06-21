@@ -1,7 +1,7 @@
 class Entropycat < Formula
   desc "Real-time data quality agent for Kafka streams"
   homepage "https://entropycat.io"
-  version "0.1.12"
+  version "0.1.13"
   license "Proprietary"
 
   on_macos do
@@ -30,6 +30,14 @@ class Entropycat < Formula
       Edit it with your Kafka brokers, Slack token and other settings,
       then run `entropycat` again.
     EOS
+  end
+
+  service do
+    run opt_bin/"entropycat"
+    keep_alive true
+    log_path var/"log/entropycat.log"
+    error_log_path var/"log/entropycat.log"
+    working_dir var
   end
 
   test do
