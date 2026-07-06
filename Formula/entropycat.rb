@@ -1,25 +1,23 @@
 class Entropycat < Formula
   desc "Real-time data quality agent for Kafka streams"
   homepage "https://entropycat.io"
-  version "0.3.4"
+  version "0.4.0"
   license "Proprietary"
 
   on_macos do
     on_arm do
       url "https://github.com/EntropyCat/entropycat/releases/download/v#{version}/entropycat_#{version}_darwin_arm64.zip"
-      sha256 "9e780f78c89162a51ce9a80c829173bbdcce703e8dcecb8244dba8ba8f0ec6bd"
+      sha256 "6041774513bc1c5a63c0a2005b271a049b62bf0f885de72d65e2db6416336751"
     end
     on_intel do
       url "https://github.com/EntropyCat/entropycat/releases/download/v#{version}/entropycat_#{version}_darwin_x86_64.zip"
-      sha256 "6eab4e37bd87b923bc492f63c0d27193d40e3ce5efc11dcefbefbf7fc3c8f7e0"
+      sha256 "a969848335b2688c5b9aa636815fba6757d79a0d91dd5191127826970dfdfdb2"
     end
   end
 
   def install
-    # standalone Nuitka build: a folder of the launcher + its dylibs/data.
-    # Install the whole thing into libexec and symlink just the launcher onto PATH.
-    libexec.install Dir["*"]
-    bin.install_symlink libexec/"entropycat"
+    bin.install "entropycat"
+    prefix.install "LICENSE", "THIRD_PARTY_LICENSES.txt"
   end
 
   def caveats
